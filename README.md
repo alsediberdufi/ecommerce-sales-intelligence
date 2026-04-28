@@ -1,19 +1,31 @@
 # 🛒 E-commerce Sales Intelligence Dashboard
 
+## 🚀 Live Project Preview
+
+
+
+---
+
 ## 📌 Project Overview
 
-This project is an end-to-end data analytics solution built to analyze e-commerce sales performance. It covers the full data lifecycle: from raw data processing and transformation to database storage and interactive dashboard visualization.
+This project is an end-to-end data analytics solution designed to analyze e-commerce sales performance. It covers the full data lifecycle: from raw data processing and transformation to database storage and interactive dashboard visualization.
 
-The goal is to extract meaningful business insights such as revenue trends, customer behavior, and geographic performance.
+The objective is to extract actionable business insights such as revenue trends, customer behavior, and geographic performance.
 
 ---
 
 ## 🧰 Tech Stack
 
-* **Python** (Pandas, NumPy) → Data processing & feature engineering
+* **Python (Pandas, NumPy)** → Data processing & feature engineering
 * **PostgreSQL** → Data storage & querying
 * **SQL** → Data modeling, aggregation, and views
 * **Power BI** → Interactive dashboard & visualization
+
+---
+
+## 🏗️ Architecture
+
+Raw Data → Python Pipeline → Clean Dataset → PostgreSQL → SQL Views → Power BI Dashboard
 
 ---
 
@@ -43,56 +55,35 @@ data/cleaned/final_dataset.csv
 
 ## 🗄️ Database Layer (PostgreSQL)
 
-The cleaned dataset is loaded into PostgreSQL and structured for analysis.
-
-### Main Table:
+### Main Table
 
 * `ecommerce_orders`
 
-### SQL Views (Reusable Analytics Layer):
+### SQL Views
 
 #### 📊 KPI View
 
 ```sql
-CREATE VIEW ecommerce_kpis AS
-SELECT
-    ROUND(SUM(item_total_value)::numeric, 2) AS total_revenue,
-    COUNT(DISTINCT order_id) AS total_orders,
-    COUNT(DISTINCT customer_id) AS total_customers,
-    ROUND(AVG(delivery_time_days)::numeric, 2) AS avg_delivery_days
-FROM ecommerce_orders;
+SELECT * FROM ecommerce_kpis;
 ```
 
 #### 📈 Monthly Revenue
 
 ```sql
-CREATE VIEW ecommerce_monthly_revenue AS
-SELECT
-    order_month,
-    ROUND(SUM(item_total_value)::numeric, 2) AS monthly_revenue
-FROM ecommerce_orders
-GROUP BY order_month
-ORDER BY order_month;
+SELECT * FROM ecommerce_monthly_revenue;
 ```
 
 #### 🌍 Top Cities
 
 ```sql
-CREATE VIEW ecommerce_top_cities AS
-SELECT
-    customer_city,
-    ROUND(SUM(item_total_value)::numeric, 2) AS revenue
-FROM ecommerce_orders
-GROUP BY customer_city;
+SELECT * FROM ecommerce_top_cities;
 ```
 
 ---
 
 ## 📊 Dashboard (Power BI)
 
-The dashboard connects directly to PostgreSQL and visualizes key metrics.
-
-### Components:
+### Key Components
 
 #### 🔹 KPI Cards
 
@@ -114,58 +105,42 @@ The dashboard connects directly to PostgreSQL and visualizes key metrics.
 ## 📸 Dashboard Preview
 
 ### Full Dashboard
+
 ![Dashboard Overview](dashboard/dashboard_overview.png)
 
 ### Monthly Revenue
+
 ![Monthly Revenue](dashboard/monthly_revenue.png)
 
 ### Top Cities
+
 ![Top Cities](dashboard/top_cities.png)
 
+---
 
 ## 📈 Key Insights
 
-* São Paulo is the dominant contributor to total revenue
-* Sales peak during mid-year months
-* Significant revenue drop after month 8
-* Number of customers ≈ number of orders → low repeat purchase rate
+* São Paulo generates the highest revenue, indicating strong regional concentration
+* Revenue peaks during mid-year months and declines significantly after month 8
+* The near 1:1 ratio of customers to orders suggests low repeat purchase behavior
+* Delivery time averages ~12 days, highlighting potential optimization opportunities
 
 ---
 
-## 🧠 What This Project Demonstrates
-
-* End-to-end data pipeline design
-* Data cleaning and feature engineering
-* SQL data modeling and optimization
-* Building reusable analytical layers (views)
-* Data visualization and storytelling
-* Integration between Python, SQL, and BI tools
-
----
-
-## 🚀 How to Run the Project
-
-### 1. Run the pipeline
+## ▶️ How to Run
 
 ```bash
-python -m scripts.run_pipeline
+pip install -r requirements.txt
+py -3.12 -m scripts.run_pipeline
+py -3.12 -m scripts.load_to_postgres
 ```
 
-### 2. Load data into PostgreSQL
+Then:
 
-* Import `final_dataset.csv` into `ecommerce_orders`
-
-### 3. Run SQL scripts
-
-```bash
-sql/views.sql
-```
-
-### 4. Open Power BI
-
-* Connect to PostgreSQL
-* Load views
-* Build dashboard
+1. Open PostgreSQL (`ecommerce_db`)
+2. Run SQL views from `sql/views.sql`
+3. Open Power BI and connect to PostgreSQL
+4. Load views and refresh dashboard
 
 ---
 
@@ -182,17 +157,31 @@ ecommerce-sales-intelligence/
 │   └── ecommerce_analysis.ipynb
 │
 ├── scripts/
-│   └── run_pipeline.py
+│   ├── run_pipeline.py
+│   └── load_to_postgres.py
 │
 ├── sql/
 │   └── views.sql
 │
 ├── dashboard/
-│   └── (Power BI screenshots)
+│   ├── dashboard_overview.png
+│   ├── monthly_revenue.png
+│   └── top_cities.png
 │
 ├── README.md
 └── requirements.txt
 ```
+
+---
+
+## 🧠 What This Project Demonstrates
+
+* End-to-end data pipeline design
+* Data cleaning and feature engineering
+* SQL data modeling and reusable views
+* Database integration (PostgreSQL)
+* Data visualization and storytelling
+* Cross-tool integration (Python → SQL → BI)
 
 ---
 
@@ -201,7 +190,7 @@ ecommerce-sales-intelligence/
 * Add customer segmentation analysis
 * Implement repeat customer / retention metrics
 * Automate pipeline scheduling
-* Deploy dashboard online (Power BI Service)
+* Deploy dashboard to Power BI Service
 * Add real-time data ingestion
 
 ---
