@@ -113,14 +113,14 @@ The dashboard connects directly to PostgreSQL and visualizes key metrics.
 
 ## 📸 Dashboard Preview
 
-*Add screenshots here*
+### Full Dashboard
+![Dashboard Overview](dashboard_overview.png)
 
-```
-dashboard/dashboard_overview.png
-dashboard/charts.png
-```
+### Monthly Revenue
+![Monthly Revenue](Monthly_Revenue_Trend_chart.png)
 
----
+### Top Cities
+![Top Cities](Top_Cities_by_Revenue_chart.png)
 
 ## 📈 Key Insights
 
